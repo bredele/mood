@@ -1,14 +1,21 @@
 
 # stated
 
-  Finite state machine
+  > it feels good to reinvent the wheel
+
+  Finite state machine inspired by [Emily](http://github.com/flams/emily) and bases on [emitter](http://github.com/component/emitter).
 
 ## Installation
 
-  Install with [component(1)](http://component.io):
+  Install with [component](http://component.io):
 
-    $ component install bredele/stated
+    $ component install bredele/states
 
+  Install with [nodejs](http://nodejs.org):
+
+    $ npm install component-states
+
+    
 ## API
 
 

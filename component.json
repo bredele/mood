@@ -1,10 +1,12 @@
 {
-  "name": "stated",
-  "repo": "bredele/stated",
+  "name": "states",
+  "repo": "bredele/states",
   "description": "Finite state machine",
   "version": "0.0.1",
   "keywords": [],
-  "dependencies": {},
+  "dependencies": {
+    "component/emitter": "*"
+  },
   "development": {},
   "license": "MIT",
   "main": "index.js",
