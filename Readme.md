@@ -1,25 +1,64 @@
-
-# stated
+# states
 
   > it feels good to reinvent the wheel
 
-  Finite state machine inspired by [Emily](http://github.com/flams/emily) and bases on [emitter](http://github.com/component/emitter).
+ Finite state machine inspired by [Emily](http://github.com/flams/emily) and bases on [emitter](http://github.com/component/emitter).
 
 ## Installation
 
-  Install with [component](http://component.io):
+ Install with [component](http://component.io):
 
     $ component install bredele/states
 
-  Install with [nodejs](http://nodejs.org):
+ Install with [nodejs](http://nodejs.org):
 
     $ npm install component-states
 
-    
+
 ## API
 
+Create a state machine and add optional transitions : 
 
+```js
+var machine = states('open', transitions);
+```
 
+is the equivalent of:
+
+```js
+states('open')
+  .add(transitions);
+```
+
+### .add(state, event, cn, next)
+
+ Add transition with callback:
+
+```js
+machine.add('open','lock', function() {
+  
+}, 'locked');
+```
+ or without:
+
+```js
+machine.add('open','lock','locked');
+```
+
+ Add multiple transitions:
+
+```js
+machine.add({
+  'open' : [
+    ['lock', fn, 'locked'],
+    ['close', fn, 'closed']
+  ],
+  'locked': [
+    ['close', 'closed'],
+    ['break', 'open']
+  ]
+});
+```
 ## License
 
   The MIT License (MIT)

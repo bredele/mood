@@ -11,7 +11,7 @@ describe("API", function() {
     assert(machine.on);
     assert(machine.once);
     assert(machine.emit);
-    assert(machine.off);    
+    assert(machine.off); 
   });
 
   it("should have a add handler", function() {

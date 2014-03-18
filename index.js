@@ -71,6 +71,7 @@ States.prototype.add = function(state, event, fn, next) {
 		this.transitions[event] = this.transitions[event] || {};
 		this.transitions[event][state] = [fn, next];
 	}
+	return this;
 };
 
 
@@ -92,4 +93,5 @@ States.prototype.emit = function(name) {
 		}
 	}
 	emit.apply(this, arguments);
+	return this;
 };
