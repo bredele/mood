@@ -27,9 +27,33 @@ function States(current, obj) {
   if(obj) this.add(obj);
 }
 
+
 //NOTE: States mixin could be great
 Emitter(States.prototype);
 
+
+/**
+ * Add transition(s).
+ * example:
+ *
+ *   .add('open', 'lock', fn, 'locked');
+ *   .add('open', 'lock', 'locked');
+ *   .add({
+ *     'open' : [
+ *       ['lock', fn, 'locked'],
+ *       ['close', 'closed']
+ *     ],
+ *     'locked' : [
+ *       ['break', 'open']
+ *     ]
+ *   });
+ *   
+ * @param {String|Object}   state 
+ * @param {String}   event
+ * @param {Function} fn  optional
+ * @param {String} next
+ * @api public
+ */
 
 States.prototype.add = function(state, event, fn, next) {
 	if(typeof state === 'object') {
@@ -48,6 +72,14 @@ States.prototype.add = function(state, event, fn, next) {
 		this.transitions[event][state] = [fn, next];
 	}
 };
+
+
+/**
+ * Emit event and apply transition.
+ * 
+ * @param  {String} name 
+ * @api public
+ */
 
 States.prototype.emit = function(name) {
 	var transition = this.transitions[name];
