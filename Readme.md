@@ -34,7 +34,7 @@ states('open')
 
 ### .add(state, event, cb, next)
 
- Add transition with callback:
+ Add transition (change from one state to an other triggered by an event) with callback:
 
 ```js
 machine.add('open','lock', function() {
@@ -61,6 +61,18 @@ machine.add({
   ]
 });
 ```
+
+### .emit(event, ...)
+
+  Emit an event and trigger a transition  as following:
+
+```js
+machine.emit('lock');
+//state is now 'locked'
+```
+
+  `states` inherits from [emitter](http://github.com/component/emitter) and can be used as a regular emitter.
+
 ## License
 
   The MIT License (MIT)
