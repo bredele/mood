@@ -1,5 +1,14 @@
 
 /**
+ * Dependencies
+ * @api private
+ */
+
+var Emitter = require('component-emitter');
+var emit = Emitter.emit;
+
+
+/**
  * Expose 'States'
  */
 
@@ -11,12 +20,15 @@ module.exports = States;
  * @api public
  */
 
-function States() {
-  if(!(this instanceof States)) return new States();
+function States(current) {
+  if(!(this instanceof States)) return new States(current);
+  this.current = current || '';
 }
 
-require('component-emitter')(States.prototype);
+//NOTE: States mixin could be great
+Emitter(States.prototype);
 
-States.prototype.add = function() {
+
+States.prototype.add = function(state, event, fn, next) {
 	// body...
 };
