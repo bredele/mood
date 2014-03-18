@@ -33,7 +33,7 @@ describe("Intial state", function() {
 	
 });
 
-describe("Add transition", function() {
+describe("Transition", function() {
 	var machine;
 	beforeEach(function() {
 		machine = states('open');
@@ -56,6 +56,12 @@ describe("Add transition", function() {
 		machine.add('open', 'lock', function(){});
 		machine.emit('lock');
 		assert.equal(machine.current, 'open');
+	});
+
+	it('should always change state', function() {
+		machine.add('open', 'lock', null, 'locked');
+		machine.emit('lock');
+		assert.equal(machine.current, 'locked');
 	});
 
 	
