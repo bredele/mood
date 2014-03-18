@@ -30,6 +30,8 @@ states('open')
   .add(transitions);
 ```
 
+ > the machine's state is available under `machine.current`
+
 ### .add(state, event, cn, next)
 
  Add transition with callback:
