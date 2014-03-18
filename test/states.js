@@ -69,6 +69,21 @@ describe("Transition", function() {
 		machine.emit('lock');
 		assert.equal(machine.current, 'locked');
 	});
+
+	it('should be a regular emit', function(done) {
+		machine.on('lock', function() {
+			done();
+		});
+		machine.add('open', 'lock', 'locked');
+		machine.emit('lock');
+	});
+
+	it('should pass data', function(done) {
+		machine.add('open', 'lock', function(hello, world){
+			if(hello === 'hello' && world === 'world') done();
+		}, 'locked');
+		machine.emit('lock', 'hello', 'world');
+	});
 	
 });
 
