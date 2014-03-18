@@ -20,10 +20,11 @@ module.exports = States;
  * @api public
  */
 
-function States(current) {
-  if(!(this instanceof States)) return new States(current);
+function States(current, obj) {
+  if(!(this instanceof States)) return new States(current, obj);
   this.current = current || '';
   this.transitions = {};
+  if(obj) this.add(obj);
 }
 
 //NOTE: States mixin could be great
@@ -31,12 +32,21 @@ Emitter(States.prototype);
 
 
 States.prototype.add = function(state, event, fn, next) {
-	if(typeof fn === 'string') {
-		next = fn;
-		fn = null;
+	if(typeof state === 'object') {
+		for(var name in state) {
+			var topic = state[name];
+			for(var i = 0, l = topic.length; i < l; i++) {
+				this.add.apply(this, [name].concat(topic[i]));
+			}
+		}
+	} else {
+		if(typeof fn === 'string') {
+			next = fn;
+			fn = null;
+		}
+		this.transitions[event] = this.transitions[event] || {};
+		this.transitions[event][state] = [fn, next];
 	}
-	this.transitions[event] = {};
-	this.transitions[event][state] = [fn, next];
 };
 
 States.prototype.emit = function(name) {
