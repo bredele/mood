@@ -1,6 +1,6 @@
 {
   "name": "component-states",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Finite state machine",
   "main": "index.js",
   "scripts": {
