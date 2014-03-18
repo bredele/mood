@@ -17,7 +17,7 @@
 
 ## API
 
-Create a state machine and add optional transitions : 
+Create a state machine with an initial state and add optional transitions : 
 
 ```js
 var machine = states('open', transitions);
