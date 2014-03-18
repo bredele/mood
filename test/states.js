@@ -64,6 +64,11 @@ describe("Transition", function() {
 		assert.equal(machine.current, 'locked');
 	});
 
+	it('should perform transition without callback', function() {
+		machine.add('open', 'lock', 'locked');
+		machine.emit('lock');
+		assert.equal(machine.current, 'locked');
+	});
 	
 });
 

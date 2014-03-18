@@ -31,6 +31,10 @@ Emitter(States.prototype);
 
 
 States.prototype.add = function(state, event, fn, next) {
+	if(typeof fn === 'string') {
+		next = fn;
+		fn = null;
+	}
 	this.transitions[event] = {};
 	this.transitions[event][state] = [fn, next];
 };
@@ -40,7 +44,8 @@ States.prototype.emit = function(name) {
 	if(transition) {
 		var state = transition[this.current];
 		if(state) {
-			state[0].apply(null, [].slice.call(arguments, 1));
+			var fn = state[0];
+			fn && fn.apply(null, [].slice.call(arguments, 1));
 			this.current = state[1] || this.current;
 		}
 	}
