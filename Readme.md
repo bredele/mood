@@ -32,13 +32,13 @@ states('open')
 
  > the machine's state is available under `machine.current`
 
-### .add(state, event, cn, next)
+### .add(state, event, cb, next)
 
  Add transition with callback:
 
 ```js
 machine.add('open','lock', function() {
-  
+  //do something
 }, 'locked');
 ```
  or without:
