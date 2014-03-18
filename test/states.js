@@ -31,5 +31,33 @@ describe("Intial state", function() {
 		assert.equal(machine.current, 'open');		
 	});
 	
+});
+
+describe("Add transition", function() {
+	var machine;
+	beforeEach(function() {
+		machine = states('open');
+	});
+
+	it("should add transition", function(done) {
+		machine.add('open', 'lock', function() {
+			done();
+		}, 'locked');
+		machine.emit('lock');
+	});
+
+	it("should set current state", function() {
+		machine.add('open', 'lock', function(){}, 'locked');
+		machine.emit('lock');
+		assert.equal(machine.current, 'locked');
+	});
+
+	it('should not change current state', function() {
+		machine.add('open', 'lock', function(){});
+		machine.emit('lock');
+		assert.equal(machine.current, 'open');
+	});
+
 	
 });
+
