@@ -14,6 +14,11 @@
 
     $ npm install component-states
 
+ Standalone:
+
+```html
+<script src="states.js"></script>
+```
 
 ## API
 

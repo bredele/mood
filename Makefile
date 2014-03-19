@@ -8,4 +8,7 @@ components: component.json
 clean:
 	rm -fr build components template.js
 
+states.js: components
+	@component build --standalone states --name states --out .
+
 .PHONY: clean
