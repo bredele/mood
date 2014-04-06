@@ -2,7 +2,7 @@
   "name": "states",
   "repo": "bredele/states",
   "description": "Finite state machine",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "keywords": [],
   "dependencies": {
     "component/emitter": "*"

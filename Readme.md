@@ -78,6 +78,15 @@ machine.emit('lock');
 
   `states` inherits from [emitter](http://github.com/component/emitter) and can be used as a regular emitter.
 
+
+## Note
+
+`states` is part of a collection of asynchronous patterns based on [emitter](http://github.com/component/emitter):
+  - [promise](http://github.com/bredele/promise)
+  - [doors](http://github.com/bredele/doors)
+  - [emitter-queue](http://github.com/bredele/emitter-queue)
+
+
 ## License
 
   The MIT License (MIT)
