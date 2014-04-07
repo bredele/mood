@@ -12,7 +12,7 @@
 
  Install with [nodejs](http://nodejs.org):
 
-    $ npm install component-states
+    $ npm install bredele-states
 
  Standalone:
 
