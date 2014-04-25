@@ -1,5 +1,5 @@
 {
-  "name": "bredele-states",
+  "name": "mood",
   "version": "0.1.1",
   "description": "Finite state machine",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/bredele/states.git"
+    "url": "git://github.com/bredele/mood.git"
   },
   "keywords": [
     "emitter",
@@ -19,7 +19,7 @@
   "author": "Olivier Wietrich <olivier.wietrich@gmail.com> (http://github.com/bredele)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bredele/states/issues"
+    "url": "https://github.com/bredele/mood/issues"
   },
   "devDependencies": {
     "mocha": "~1.18.0"

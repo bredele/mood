@@ -1,6 +1,6 @@
-# states
+# Mood
 
-  > it feels good to reinvent the wheel
+  > Give some mood to your code.
 
  Finite state machine inspired by [Emily](http://github.com/flams/emily) and based on [emitter](http://github.com/component/emitter).
 
@@ -8,24 +8,24 @@
 
  Install with [component](http://component.io):
 
-    $ component install bredele/states
+    $ component install bredele/mood
 
  Install with [nodejs](http://nodejs.org):
 
-    $ npm install component-states
+    $ npm install mood
 
  Standalone:
 
 ```html
-<script src="states.js"></script>
+<script src="mood.js"></script>
 ```
 
 ## API
 
-Create a state machine with an initial state and add optional transitions : 
+Create a finite state machine with an initial state and add optional transitions : 
 
 ```js
-var machine = states('open', transitions);
+var mood = states('open', transitions);
 ```
 
 is the equivalent of:
@@ -35,27 +35,27 @@ states('open')
   .add(transitions);
 ```
 
- > the machine's state is available under `machine.current`
+ > the current state is available under `mood.current`
 
 ### .add(state, event, cb, next)
 
  Add transition (change from one state to an other triggered by an event) with callback:
 
 ```js
-machine.add('open','lock', function() {
+mood.add('open','lock', function() {
   //do something
 }, 'locked');
 ```
  or without:
 
 ```js
-machine.add('open','lock','locked');
+mood.add('open','lock','locked');
 ```
 
  Add multiple transitions:
 
 ```js
-machine.add({
+mood.add({
   'open' : [
     ['lock', fn, 'locked'],
     ['close', fn, 'closed']
@@ -72,19 +72,19 @@ machine.add({
   Emit an event and trigger a transition  as following:
 
 ```js
-machine.emit('lock');
+mood.emit('lock');
 //state is now 'locked'
 ```
 
-  `states` inherits from [emitter](http://github.com/component/emitter) and can be used as a regular emitter.
+  `mood` inherits from [emitter](http://github.com/component/emitter) and can be used as a regular emitter.
 
 
 ## Note
 
 `states` is part of a collection of asynchronous patterns based on [emitter](http://github.com/component/emitter):
-  - [promise](http://github.com/bredele/promise)
-  - [doors](http://github.com/bredele/doors)
-  - [emitter-queue](http://github.com/bredele/emitter-queue)
+  - **[promise](http://github.com/bredele/promise)**
+  - **[doors](http://github.com/bredele/doors)**
+  - **[emitter-queue](http://github.com/bredele/emitter-queue)**
 
 
 ## License

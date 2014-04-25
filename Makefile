@@ -6,9 +6,9 @@ components: component.json
 	@component install --dev
 
 clean:
-	rm -fr build components template.js
+	rm -fr build components
 
-states.js: components
-	@component build --standalone states --name states --out .
+mood.js: components
+	@component build --standalone mood --name mood --out .
 
 .PHONY: clean
