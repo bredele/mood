@@ -1,6 +1,6 @@
 {
   "name": "mood",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Finite state machine",
   "main": "index.js",
   "scripts": {
