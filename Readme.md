@@ -2,7 +2,7 @@
 
   > Give some mood to your code.
 
- Finite state machine inspired by [Emily](http://github.com/flams/emily) and based on [emitter](http://github.com/component/emitter).
+ Finite state machine based on [emitter](http://github.com/component/emitter).
 
 ## Installation
 
