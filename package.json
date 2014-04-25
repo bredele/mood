@@ -1,7 +1,7 @@
 {
   "name": "mood",
   "version": "0.1.2",
-  "description": "Finite state machine",
+  "description": "Give some mood to your code with a finite state machine",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
