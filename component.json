@@ -2,7 +2,7 @@
   "name": "mood",
   "repo": "bredele/mood",
   "description": "Finite state machine",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "keywords": [],
   "dependencies": {
     "component/emitter": "*"
