@@ -3,7 +3,7 @@
   "repo": "bredele/mood",
   "description": "Finite state machine",
   "version": "0.1.3",
-  "keywords": [],
+  "keywords": ["state", "finite", "emitter"],
   "dependencies": {
     "component/emitter": "*"
   },
