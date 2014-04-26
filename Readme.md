@@ -25,6 +25,7 @@
 Create a finite state machine with an initial state and add optional transitions : 
 
 ```js
+var states = require('mood');
 var mood = states('open', transitions);
 ```
 
