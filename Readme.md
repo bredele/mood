@@ -38,7 +38,7 @@ door.emit('lock')
 door.emit('break')
 ```
 
-Check out our [API](/doc) documentation and [tests](/test) for more information.
+Check out our [API](/test) for more information.
 
 ## Installation
 
