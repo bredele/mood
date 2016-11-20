@@ -4,7 +4,7 @@
   "description": "Give some mood to your code with a finite state machine",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "tape test/*.js"
   },
   "repository": {
     "type": "git",
