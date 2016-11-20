@@ -21,10 +21,8 @@ test('current state should be empty by default', assert => {
   assert.equal(states.current, '')
 })
 
-
-
-//
-//   test("should initalize state in constructor", function() {
-//     var mood = states('open');
-//     assert.equal(mood.current, 'open');
-//   });
+test('it should initialize current state', assert => {
+  assert.plan(1)
+  var states = mood('open')
+  assert.equal(states.current, 'open')
+})
