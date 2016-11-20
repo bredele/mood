@@ -1,9 +1,9 @@
 # Mood
 
 [![Build Status](https://travis-ci.org/bredele/mood.svg?branch=master)](https://travis-ci.org/bredele/mood)
-  [![NPM](https://img.shields.io/npm/v/mood.svg)](https://www.npmjs.com/package/mood)
-  [![Downloads](https://img.shields.io/npm/dm/mood.svg)](http://npm-stat.com/charts.html?package=mood)
-  [![pledge](https://bredele.github.io/contributing-guide/community-pledge.svg)](https://github.com/bredele/contributing-guide/blob/master/guidelines.md)
+[![NPM](https://img.shields.io/npm/v/mood.svg)](https://www.npmjs.com/package/mood)
+[![Downloads](https://img.shields.io/npm/dm/mood.svg)](http://npm-stat.com/charts.html?package=mood)
+[![pledge](https://bredele.github.io/contributing-guide/community-pledge.svg)](https://github.com/bredele/contributing-guide/blob/master/guidelines.md)
 
 Finite state machine based on event [emitter](http://github.com/component/emitter).
 

@@ -7,4 +7,4 @@ Run the tests and get a better appreciation of the following API:
 $ npm test
 ```
 
-## 
+##
