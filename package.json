@@ -22,7 +22,6 @@
     "url": "https://github.com/bredele/mood/issues"
   },
   "devDependencies": {
-    "mocha": "~1.18.0",
     "tape": "^4.6.2"
   },
   "dependencies": {
