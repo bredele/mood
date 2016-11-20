@@ -40,7 +40,7 @@ test('it should add a transition', assert => {
   assert.equal(locked, true)
 })
 
-test('it should changed current state when transition added', assert => {
+test('it should change current state when transition added', assert => {
   assert.plan(1)
   var states = mood('open')
   states.add('open', 'lock', function() {}, 'locked')
@@ -48,6 +48,14 @@ test('it should changed current state when transition added', assert => {
   assert.equal(states.current, 'locked')
 })
 
+
+test('it should not change current state if not new state passed', assert => {
+  assert.plan(1)
+  var states = mood('open')
+  states.add('open', 'lock', function() {})
+  states.emit('lock')
+  assert.equal(states.current, 'open')
+})
 
 
 //
@@ -59,11 +67,6 @@ test('it should changed current state when transition added', assert => {
 //   });
 //
 //
-//   it("should set current state", function() {
-//     mood.add('open', 'lock', function(){}, 'locked');
-//     mood.emit('lock');
-//     assert.equal(mood.current, 'locked');
-//   });
 //
 //   it('should not change current state', function() {
 //     mood.add('open', 'lock', function(){});
