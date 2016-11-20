@@ -72,42 +72,11 @@ test('it should not change current state if not new state passed', assert => {
   assert.equal(states.current, 'open')
 })
 
-//
-//
-// describe("Add transition", function() {
-//   var mood;
-//   beforeEach(function() {
-//     mood = states('open');
-//   });
-//
-//
-//
-//
-//   it('should always change state', function() {
-//     mood.add('open', 'lock', null, 'locked');
-//     mood.emit('lock');
-//     assert.equal(mood.current, 'locked');
-//   });
-//
-//   it('should perform transition without callback', function() {
-//     mood.add('open', 'lock', 'locked');
-//     mood.emit('lock');
-//     assert.equal(mood.current, 'locked');
-//   });
-//
-//   it('should be a regular emit', function(done) {
-//     mood.on('lock', function() {
-//       done();
-//     });
-//     mood.add('open', 'lock', 'locked');
-//     mood.emit('lock');
-//   });
-//
-//   it('should pass data', function(done) {
-//     mood.add('open', 'lock', function(hello, world){
-//       if(hello === 'hello' && world === 'world') done();
-//     }, 'locked');
-//     mood.emit('lock', 'hello', 'world');
-//   });
-//
-// });
+test('it should pass data in the transition callback', assert => {
+  assert.plan(1)
+  var states = mood('open')
+  states.add('open', 'lock', function(data) {
+    assert.equal(data, 'hello world')
+  })
+  states.emit('lock', 'hello world')
+})
