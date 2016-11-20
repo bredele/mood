@@ -80,3 +80,87 @@ test('it should pass data in the transition callback', assert => {
   })
   states.emit('lock', 'hello world')
 })
+
+
+test('should add multiple transition', assert => {
+  assert.plan(5)
+  var cb = function() {}
+  var states = mood('open')
+  states.add({
+    'open' : [
+      ['lock', 'locked'],
+      ['close', 'closed']
+    ],
+    'locked': [
+      ['close', 'closed'],
+      ['break', cb, 'open']
+    ]
+  })
+  states.emit('break')
+  assert.equal(states.current, 'open')
+  states.emit('lock')
+  assert.equal(states.current, 'locked')
+  states.emit('open')
+  assert.equal(states.current, 'locked')
+  states.emit('break')
+  assert.equal(states.current, 'open')
+  states.emit('close')
+  assert.equal(states.current, 'closed')
+})
+
+
+//
+//
+// describe("Add transitions", function() {
+//   var mood, fn;
+//   beforeEach(function() {
+//     fn = function(){};
+//     mood = states('open');
+//     mood.add({
+//       'open' : [
+//         ['lock', fn, 'locked'],
+//         ['close', fn, 'closed']
+//       ],
+//       'locked': [
+//         ['close', 'closed'],
+//         ['break', 'open']
+//       ]
+//     });
+//   });
+//
+//   it("should add multiple transitions", function() {
+//     mood.emit('break');
+//     assert.equal(mood.current, 'open');
+//     mood.emit('lock');
+//     assert.equal(mood.current, 'locked');
+//     mood.emit('open');
+//     assert.equal(mood.current, 'locked');
+//     mood.emit('break');
+//     assert.equal(mood.current, 'open');
+//     mood.emit('close');
+//     assert.equal(mood.current, 'closed');
+//   });
+//
+//   it('should add transitions from constructor', function() {
+//     var mood = states('open', {
+//       'open' : [
+//         ['lock', fn, 'locked'],
+//         ['close', fn, 'closed']
+//       ],
+//       'locked': [
+//         ['close', 'closed'],
+//         ['break', 'open']
+//       ]
+//     });
+//     mood.emit('break');
+//     assert.equal(mood.current, 'open');
+//     mood.emit('lock');
+//     assert.equal(mood.current, 'locked');
+//     mood.emit('open');
+//     assert.equal(mood.current, 'locked');
+//     mood.emit('break');
+//     assert.equal(mood.current, 'open');
+//     mood.emit('close');
+//     assert.equal(mood.current, 'closed');
+//   });
+// });
