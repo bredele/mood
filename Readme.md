@@ -12,7 +12,27 @@ Finite state machine based on event [emitter](http://github.com/component/emitte
 ## Usage
 
 ```js
+import mood from 'mood'
 
+const door = mood('open', {
+  'open' : [
+    ['lock', () => {
+      // do something when the current state is 'open'
+      // and on the 'lock' event
+    },'locked'],
+    ['close', 'closed']
+  ],
+  'locked': [
+    ['close', 'closed'],
+    ['break', () => {
+      // do something when the current state is 'locked'
+      // and on the 'break' event
+    }, 'open']
+  ]
+})
+
+door.emit('lock')
+door.emit('break')
 ```
 
 Check out our [API](/doc) documentation and [tests](/test) for more information.
