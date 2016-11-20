@@ -14,3 +14,17 @@ test('should be an emitter', assert => {
   assert.equal(typeof states.once, 'function')
   assert.equal(typeof states.emit, 'function')
 })
+
+test('current state should be empty by default', assert => {
+  assert.plan(1)
+  var states = mood()
+  assert.equal(states.current, '')
+})
+
+
+
+//
+//   test("should initalize state in constructor", function() {
+//     var mood = states('open');
+//     assert.equal(mood.current, 'open');
+//   });
