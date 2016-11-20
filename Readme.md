@@ -5,9 +5,12 @@
 [![Downloads](https://img.shields.io/npm/dm/mood.svg)](http://npm-stat.com/charts.html?package=mood)
 [![pledge](https://bredele.github.io/contributing-guide/community-pledge.svg)](https://github.com/bredele/contributing-guide/blob/master/guidelines.md)
 
-Finite state machine based on event [emitter](http://github.com/component/emitter).
+Mood is an elegant state machine you can use to model large number of problems, among which are UI state management, communication protocol design, language parsing, artificial intelligence and other engineering applications.
 
-[Try it online!]()
+* **Finite state machine**: Use mood to perform predetermined sequence of actions depending on a sequence of events with which they are presented.
+* **Event emitter**: Mood is based on the [event emitter](http://github.com/component/emitter) pattern that is widely used in the browser and nodejs. Mood is well tested can be used with nodejs processes, streams and way more.
+
+[Try it online!](http://requirebin.com/?code=79074d59c1525895625c)
 
 ## Usage
 
