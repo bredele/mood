@@ -40,6 +40,16 @@ test('it should add a transition', assert => {
   assert.equal(locked, true)
 })
 
+test('it should changed current state when transition added', assert => {
+  assert.plan(1)
+  var states = mood('open')
+  states.add('open', 'lock', function() {}, 'locked')
+  states.emit('lock')
+  assert.equal(states.current, 'locked')
+})
+
+
+
 //
 //
 // describe("Add transition", function() {
@@ -48,12 +58,6 @@ test('it should add a transition', assert => {
 //     mood = states('open');
 //   });
 //
-//   it("should add transition", function(done) {
-//     mood.add('open', 'lock', function() {
-//       done();
-//     }, 'locked');
-//     mood.emit('lock');
-//   });
 //
 //   it("should set current state", function() {
 //     mood.add('open', 'lock', function(){}, 'locked');
