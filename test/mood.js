@@ -48,6 +48,13 @@ test('it should change current state when transition added', assert => {
   assert.equal(states.current, 'locked')
 })
 
+test('it should still change state if transition function does not exist', assert => {
+  assert.plan(1)
+  var states = mood('open')
+  states.add('open', 'lock', null, 'locked')
+  states.emit('lock')
+  assert.equal(states.current, 'locked')
+})
 
 test('it should not change current state if not new state passed', assert => {
   assert.plan(1)
@@ -56,7 +63,6 @@ test('it should not change current state if not new state passed', assert => {
   states.emit('lock')
   assert.equal(states.current, 'open')
 })
-
 
 //
 //
@@ -68,11 +74,6 @@ test('it should not change current state if not new state passed', assert => {
 //
 //
 //
-//   it('should not change current state', function() {
-//     mood.add('open', 'lock', function(){});
-//     mood.emit('lock');
-//     assert.equal(mood.current, 'open');
-//   });
 //
 //   it('should always change state', function() {
 //     mood.add('open', 'lock', null, 'locked');
