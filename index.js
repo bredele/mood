@@ -64,15 +64,19 @@ Emitter(Mood.prototype)
  */
 
 Mood.prototype.add = function(state, event, fn, next) {
-  if(typeof state === 'object') {
+  if(typeof state == 'object') {
     for(var name in state) {
       var topic = state[name]
-      for(var i = 0, l = topic.length; i < l; i++) {
-        this.add.apply(this, [name].concat(topic[i]))
+      if(typeof topic[0] == 'string') {
+        this.add.apply(this, [name].concat(topic))
+      } else {
+        for(var i = 0, l = topic.length; i < l; i++) {
+          this.add.apply(this, [name].concat(topic[i]))
+        }
       }
     }
   } else {
-    if(typeof fn === 'string') {
+    if(typeof fn == 'string') {
       next = fn
       fn = null
     }

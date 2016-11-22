@@ -89,7 +89,7 @@ test('it should pass data in the transition callback', assert => {
 
 
 test('should add multiple transition from the add handler', assert => {
-  assert.plan(5)
+  assert.plan(6)
   var cb = function() {}
   var states = mood('open')
   states.add({
@@ -100,7 +100,8 @@ test('should add multiple transition from the add handler', assert => {
     'locked': [
       ['close', 'closed'],
       ['break', cb, 'open']
-    ]
+    ],
+    'closed' : ['knock', 'open']
   })
   states.emit('break')
   assert.equal(states.current, 'open')
@@ -112,6 +113,8 @@ test('should add multiple transition from the add handler', assert => {
   assert.equal(states.current, 'open')
   states.emit('close')
   assert.equal(states.current, 'closed')
+  states.emit('knock')
+  assert.equal(states.current, 'open')
 })
 
 
