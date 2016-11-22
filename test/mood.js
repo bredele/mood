@@ -29,6 +29,12 @@ test('it should initialize current state', assert => {
 })
 
 
+test('it should initialize current state from a function', assert => {
+  assert.plan(1)
+  var states = mood(() => 'open')
+  assert.equal(states.current, 'open')
+})
+
 test('it should add a transition', assert => {
   assert.plan(1)
   var locked = false

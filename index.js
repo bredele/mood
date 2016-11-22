@@ -28,6 +28,7 @@ module.exports = Mood
 
 function Mood(current, obj) {
   if(!(this instanceof Mood)) return new Mood(current, obj)
+  if(typeof current == 'function') current = current()
   this.current = current || ''
   this.transitions = {}
   if(obj) this.add(obj)
