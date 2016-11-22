@@ -24,6 +24,15 @@ mood('open').add(transitions);
 
  > the current state is available under `mood.current`
 
+You also can initialize a state machine with a function as following:
+
+```js
+mood(function() {
+  // do something
+  return 'open'
+})
+```
+
 ### .add(state, event, cb, next)
 
  Add transition (change from one state to an other triggered by an event) with callback:
