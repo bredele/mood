@@ -18,13 +18,11 @@ Mood is an elegant [state machine](https://en.wikipedia.org/wiki/Finite-state_ma
 import mood from 'mood'
 
 const door = mood('open', {
-  'open' : [
+  'open' :
     ['lock', () => {
       // do something when the current state is 'open'
       // and on the 'lock' event
     },'locked'],
-    ['close', 'closed']
-  ],
   'locked': [
     ['close', 'closed'],
     ['break', () => {
