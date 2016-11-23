@@ -74,6 +74,19 @@ states.emit('lock');
 
   `mood` inherits from [emitter](http://github.com/component/emitter) and can be used as a regular emitter.
 
+
+### .dispatch(event
+
+Curry emit and return a function that once called trigger a transition:
+
+```js
+var states = mood('open', {
+  'open' : ['lock', 'locked']
+})
+var lock = states.dispatch('lock')
+lock()
+```
+
 ## Notes
 
 `states` is part of a collection of asynchronous patterns based on [emitter](http://github.com/component/emitter):
