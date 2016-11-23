@@ -75,7 +75,7 @@ states.emit('lock');
   `mood` inherits from [emitter](http://github.com/component/emitter) and can be used as a regular emitter.
 
 
-### .dispatch(event
+### .dispatch(event)
 
 Curry emit and return a function that once called trigger a transition:
 
