@@ -107,3 +107,20 @@ Mood.prototype.emit = function(name) {
   emit.apply(this, arguments)
   return this
 }
+
+
+/**
+ * Curry event and apply transition on call.
+ *
+ * @param  {String} name
+ * @return {Function}
+ * @api public
+ */
+
+Mood.prototype.dispatch = function(name) {
+  var that = this
+  var send = that.emit.bind(that, name)
+  return function() {
+    send.apply(that, [].slice.call(arguments))
+  }
+}

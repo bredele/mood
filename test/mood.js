@@ -142,3 +142,13 @@ test('should add multiple transition from the constructor', assert => {
   states.emit('close')
   assert.equal(states.current, 'closed')
 })
+
+test('should current event', assert => {
+  assert.plan(1)
+  var states = mood('open', {
+    'open' : ['lock', 'locked']
+  })
+  var emit = states.dispatch('lock')
+  emit()
+  assert.equal(states.current, 'locked')
+})
