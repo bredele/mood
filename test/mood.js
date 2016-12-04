@@ -52,7 +52,6 @@ test('add multiple transitions with single condition', assert => {
   states.emit('welcome')
 })
 
-
 test('add multiple transitions with multiple conditions', assert => {
   assert.plan(3)
   var states = mood('init')
@@ -67,4 +66,23 @@ test('add multiple transitions with multiple conditions', assert => {
   assert.equal(states.current, 'world')
   states.emit('welcome')
   states.emit('welcome')
+})
+
+test('should reset conditions', assert => {
+  assert.plan(4)
+  var states = mood('init')
+  states.add({
+    'init': [['hello', 'ola'], 'world'],
+    'world': ['welcome', 'init']
+  })
+  states.emit('hello')
+  states.emit('ola')
+  assert.equal(states.current, 'world')
+  states.emit('welcome')
+  assert.equal(states.current, 'init')
+  console.log('conditions should be reseted')
+  states.emit('hello')
+  assert.equal(states.current, 'init')
+  states.emit('ola')
+  assert.equal(states.current, 'world')
 })
