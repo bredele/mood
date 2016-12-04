@@ -41,7 +41,7 @@ test('transition callback is optional', assert => {
   assert.equal(states.current, 'world')
 })
 
-test('add multiple transitions', assert => {
+test('add multiple transitions with single condition', assert => {
   assert.plan(1)
   var states = mood('init')
   states.add({
@@ -50,4 +50,21 @@ test('add multiple transitions', assert => {
   })
   states.emit('hello')
   states.emit('welcome')
+})
+
+
+test('add multiple transitions with multiple conditions', assert => {
+  assert.plan(3)
+  var states = mood('init')
+  states.add({
+    'init': [['hello', 'ola'], 'world'],
+    'world': ['welcome', () => assert.pass('add multiple states')]
+  })
+  states.emit('hello')
+  states.emit('welcome')
+  assert.equal(states.current, 'init')
+  states.emit('ola')
+  assert.equal(states.current, 'world')
+  states.emit('welcome')
+  //states.emit('welcome')
 })

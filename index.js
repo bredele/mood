@@ -21,7 +21,7 @@ module.exports = function(state) {
     var arr = store[before] = (store[before] || [])
     arr.push(gobs([].concat(conditions), function() {
       transition && transition.apply(null, arguments)
-      that.current = after
+      that.current = after || that.current
       conditions.concat(clone)
     }))
   }
