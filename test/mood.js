@@ -58,7 +58,7 @@ test('add multiple transitions with multiple conditions', assert => {
   var states = mood('init')
   states.add({
     'init': [['hello', 'ola'], 'world'],
-    'world': ['welcome', () => assert.pass('add multiple states')]
+    'world': [['welcome', 'welcome'], () => assert.pass('add multiple states')]
   })
   states.emit('hello')
   states.emit('welcome')
@@ -66,5 +66,5 @@ test('add multiple transitions with multiple conditions', assert => {
   states.emit('ola')
   assert.equal(states.current, 'world')
   states.emit('welcome')
-  //states.emit('welcome')
+  states.emit('welcome')
 })
