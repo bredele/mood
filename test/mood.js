@@ -111,9 +111,30 @@ test('should reset conditions', assert => {
   assert.equal(states.current, 'world')
   states.emit('welcome')
   assert.equal(states.current, 'init')
-  console.log('conditions should be reseted')
   states.emit('hello')
   assert.equal(states.current, 'init')
   states.emit('ola')
   assert.equal(states.current, 'world')
+})
+
+
+test('it should pass data in the transition callback', assert => {
+  assert.plan(1)
+  var states = mood('open')
+  states.add('open', 'lock', function(data) {
+    assert.equal(data, 'hello world')
+  })
+  states.emit('lock', 'hello world')
+})
+
+test('it should pass data in the transition callback with multiple conditions', assert => {
+  assert.plan(2)
+  var states = mood('open')
+  // if conditions have the same it does not work
+  states.add('open', ['lock1', 'lock2'], function(first, second) {
+    assert.equal(first, 'hello')
+    assert.equal(second, 'world')
+  })
+  states.emit('lock1', 'hello')
+  states.emit('lock2', 'world')
 })
