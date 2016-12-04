@@ -20,15 +20,10 @@ module.exports = function(state) {
       transition = null
     }
     var states = store[before] = (store[before] || [])
-    var arr = [].concat(conditions)
-    var clone = arr.slice(0)
-    states.push(gobs(arr, function() {
-      clone.map(function(item) {
-        arr.push(item)
-      })
+    states.push(gobs([].concat(conditions), function() {
       transition && transition.apply(null, arguments)
       that.current = after || that.current
-    }))
+    }, true))
   }
 
   that.add = function(before, conditions, transition, after) {

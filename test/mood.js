@@ -127,6 +127,7 @@ test('it should pass data in the transition callback', assert => {
   states.emit('lock', 'hello world')
 })
 
+
 test('it should pass data in the transition callback with multiple conditions', assert => {
   assert.plan(2)
   var states = mood('open')
