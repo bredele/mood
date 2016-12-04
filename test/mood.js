@@ -12,6 +12,17 @@ test('triggers a state transition with a single condition', assert => {
   states.emit('hello')
 })
 
+
+test('it should not change current state if transition state does not exist', assert => {
+  assert.plan(3)
+  var states = mood('open')
+  states.add('open', 'lock', () => assert.pass('transition called'))
+  states.emit('lock')
+  assert.equal(states.current, 'open')
+  states.emit('lock')
+})
+
+
 test('triggers a transition and change current state', assert => {
   assert.plan(1)
   var states = mood('init')
