@@ -23,10 +23,12 @@ test('it should trigger a transition and change current state', assert => {
 })
 
 test('it should trigger a state transition with a multiple conditions', assert => {
-  assert.plan(1)
+  assert.plan(3)
   var states = mood('init')
-  states.add('init', ['hello', 'world'], () => assert.pass('multiple conditions'))
+  states.add('init', ['hello', 'world'], () => assert.pass('multiple conditions'), 'world')
   states.emit('hello')
   states.emit('hello again')
+  assert.equal(states.current, 'init')
   states.emit('world')
+  assert.equal(states.current, 'world')
 })
