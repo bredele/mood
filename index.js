@@ -26,7 +26,14 @@ module.exports = function(state) {
     }))
   }
 
-  that.add = add
+  that.add = function(before, conditions, transition, after) {
+    if(typeof before == 'object') {
+      for(var name in before) {
+        add.apply(null, [name].concat(before[name]))
+      }
+    } else add.apply(null, arguments)
+  }
+
   that.emit = function() {
     var transition = store[that.current][0]
     transition.apply(null, arguments)
