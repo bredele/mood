@@ -11,6 +11,11 @@ test('it should initialize current state', assert => {
   assert.equal(states.current, 'open')
 })
 
+test('it should initialize current state from a function', assert => {
+  assert.plan(1)
+  var states = mood(() => 'open')
+  assert.equal(states.current, 'open')
+})
 
 test('triggers a state transition with a single condition', assert => {
   assert.plan(1)

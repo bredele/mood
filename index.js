@@ -7,7 +7,9 @@ var gobs = require('gobs')
 
 module.exports = function(state) {
   var that = {
-    current: state
+    current: typeof state == 'function'
+      ? state()
+      : state
   }
 
   var store = {}
