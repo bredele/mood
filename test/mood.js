@@ -32,17 +32,17 @@ test('it should initialize current state from a function', assert => {
   assert.equal(states.current, 'open')
 })
 
-// test('it should add a transition', assert => {
-//   assert.plan(1)
-//   var locked = false
-//   var states = mood('open')
-//   states.add('open', 'lock', function() {
-//     locked = true
-//   }, 'locked')
-//   states.emit('lock')
-//   assert.equal(locked, true)
-// })
-//
+test('it should add a transition', assert => {
+  assert.plan(1)
+  var locked = false
+  var states = mood('open')
+  states.add('open', 'lock', function() {
+    locked = true
+  }, 'locked')
+  states.emit('lock')
+  assert.equal(locked, true)
+})
+
 // test('it should change current state when transition added', assert => {
 //   assert.plan(1)
 //   var states = mood('open')
