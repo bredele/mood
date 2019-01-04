@@ -63,6 +63,14 @@ states.add({
 });
 ```
 
+`cb` can be:
+  - null or undefined
+  - a function
+  - a promise
+  - a function returning a promise
+  
+ When `cb` is a promise or return a promise, `mood` will wait for the promise to be resolved before triggering a change of state.
+
 ### .trigger(event, ...)
 
   Emit an event and trigger a transition  as following:
@@ -71,6 +79,16 @@ states.add({
 states.trigger('lock');
 //state is now 'locked'
 ```
+
+  `mood` is full asynchronous and trigger returns a promise that is resolved when states changes.
+
+
+```js
+states.trigger('lock').then(newState => {
+  // do something
+})
+```
+
 
   `mood` inherits from [emitter](http://github.com/bredele/zeroin) and can be used as a regular emitter.
 
