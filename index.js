@@ -12,7 +12,7 @@ module.exports = function (initial, obj) {
    * @type {String}
    */
 
-  machine.current = ''
-  
+  machine.current = initial || ''
+
   return machine
 }
