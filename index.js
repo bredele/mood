@@ -26,9 +26,11 @@ module.exports = function (initial, obj) {
       transition = null
     }
     machine.on(before + ' ' + event, function (args, cb) {
-      transition && transition.apply(null, args)
-      machine.current = after || machine.current
-      cb(machine.current)
+      Promise.resolve(
+        typeof transition === 'function'
+          ? transition.apply(null, args)
+          : transition
+      ).then(() => cb((machine.current = after || machine.current)))
     })
   }
 
