@@ -84,6 +84,24 @@ test('it should pass data in the transition callback', assert => {
   states.trigger('lock', 'hello world')
 })
 
+test('trigger should return a promise resolved with the new state', assert => {
+  assert.plan(2)
+  var states = mood('open')
+  states.add('open', 'lock', function () {})
+  states.add('open', 'unlock', 'unlocked')
+  states.trigger('lock').then(state => assert.equal(state, 'open'))
+  states.trigger('unlock').then(state => assert.equal(state, 'unlocked'))
+})
+
+// test('should accept promises as transition', assert => {
+//   assert.plan(1)
+//   var promise = new Promise(resolve => setTimeout(resolve, 500))
+//   var states = mood('open')
+//   states.add('open', 'lock', promise, 'locked')
+//   states.trigger('lock')
+//   promise.then(() => assert.equal(states.current, 'locked'))
+// })
+
 //
 // test('should add multiple transition from the add handler', assert => {
 //   assert.plan(6)

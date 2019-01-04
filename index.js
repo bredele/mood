@@ -25,14 +25,19 @@ module.exports = function (initial, obj) {
       after = transition
       transition = null
     }
-    machine.on(before + ' ' + event, function () {
-      transition && transition.apply(null, arguments)
+    machine.on(before + ' ' + event, function (args, cb) {
+      transition && transition.apply(null, args)
       machine.current = after || machine.current
+      cb(machine.current)
     })
   }
 
   machine.trigger = function (topic) {
-    return machine.emit.apply(machine, [machine.current + ' ' + topic].concat([].slice.call(arguments, 1)))
+    var args = [].slice.call(arguments, 1)
+    return new Promise(function (resolve) {
+      machine.emit.call(machine, machine.current + ' ' + topic, args, resolve)
+    })
+    //return machine.emit.apply(machine, [machine.current + ' ' + topic].concat([].slice.call(arguments, 1)))
   }
 
   return machine
