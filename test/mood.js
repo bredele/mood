@@ -74,16 +74,16 @@ test('it should not change current state if not new state passed', assert => {
   states.trigger('lock')
   assert.equal(states.current, 'open')
 })
-//
-// test('it should pass data in the transition callback', assert => {
-//   assert.plan(1)
-//   var states = mood('open')
-//   states.add('open', 'lock', function(data) {
-//     assert.equal(data, 'hello world')
-//   })
-//   states.emit('lock', 'hello world')
-// })
-//
+
+test('it should pass data in the transition callback', assert => {
+  assert.plan(1)
+  var states = mood('open')
+  states.add('open', 'lock', function(data) {
+    assert.equal(data, 'hello world')
+  })
+  states.trigger('lock', 'hello world')
+})
+
 //
 // test('should add multiple transition from the add handler', assert => {
 //   assert.plan(6)
