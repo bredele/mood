@@ -20,7 +20,7 @@ module.exports = function (initial, obj) {
    * @api public
    */
 
-  machine.add = function (before, event, transition, after) {
+  var add = function (before, event, transition, after) {
     if (typeof transition === 'string') {
       after = transition
       transition = null
@@ -30,16 +30,36 @@ module.exports = function (initial, obj) {
         typeof transition === 'function'
           ? transition.apply(null, args)
           : transition
-      ).then(() => cb((machine.current = after || machine.current)))
+      ).then(() => {
+        return cb((machine.current = after || machine.current))
+      })
     })
+  }
+
+  /**
+   * Add transition.
+   *
+   * @api public
+   */
+
+  machine.add = function (before, event, transition, after) {
+    if (typeof before === 'object') {
+      Object.keys(before).map(function (key) {
+        [].concat(before[key]).map(function (sequence) {
+          add.apply(null, [key].concat(sequence))
+        })
+      })
+    } else add(before, event, transition, after)
   }
 
   machine.trigger = function (topic) {
     var args = [].slice.call(arguments, 1)
     return new Promise(function (resolve) {
-      machine.emit.call(machine, machine.current + ' ' + topic, args, resolve)
+      var current = machine.current
+      var event = current + ' ' + topic
+      if (machine.listenerCount(event) > 0) machine.emit.call(machine, event, args, resolve)
+      else resolve(current)
     })
-    //return machine.emit.apply(machine, [machine.current + ' ' + topic].concat([].slice.call(arguments, 1)))
   }
 
   return machine

@@ -115,36 +115,34 @@ test('should accept function transition returning promises and change state only
   })
 })
 
-//
-// test('should add multiple transition from the add handler', assert => {
-//   assert.plan(6)
-//   var cb = function() {}
-//   var states = mood('open')
-//   states.add({
-//     'open' : [
-//       ['lock', 'locked'],
-//       ['close', 'closed']
-//     ],
-//     'locked': [
-//       ['close', 'closed'],
-//       ['break', cb, 'open']
-//     ],
-//     'closed' : ['knock', 'open']
-//   })
-//   states.emit('break')
-//   assert.equal(states.current, 'open')
-//   states.emit('lock')
-//   assert.equal(states.current, 'locked')
-//   states.emit('open')
-//   assert.equal(states.current, 'locked')
-//   states.emit('break')
-//   assert.equal(states.current, 'open')
-//   states.emit('close')
-//   assert.equal(states.current, 'closed')
-//   states.emit('knock')
-//   assert.equal(states.current, 'open')
-// })
-//
+
+test('should add multiple transition from the add handler', assert => {
+  assert.plan(6)
+  var states = mood('open')
+  states.add({
+    'open' : [
+      ['lock', 'locked'],
+      ['close', 'closed']
+    ],
+    'locked': [
+      ['close', 'closed'],
+      ['break', function () {}, 'open']
+    ],
+    'closed' : [['knock', 'open']]
+  })
+  states.trigger('break').then(state => assert.equal(state, 'open'))
+    .then(() => states.trigger('lock'))
+      .then(state => assert.equal(state, 'locked'))
+    .then(() => states.trigger('open'))
+      .then(state => assert.equal(state, 'locked'))
+    .then(() => states.trigger('break'))
+      .then(state => assert.equal(state, 'open'))
+    .then(() => states.trigger('close'))
+      .then(state => assert.equal(state, 'closed'))
+    .then(() => states.trigger('knock'))
+      .then(state => assert.equal(state, 'open'))
+})
+
 //
 // test('should add multiple transition from the constructor', assert => {
 //   assert.plan(5)
