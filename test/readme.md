@@ -63,32 +63,38 @@ states.add({
 });
 ```
 
-### .emit(event, ...)
+`cb` can be:
+  - null or undefined
+  - a function
+  - a promise
+  - a function returning a promise
+  
+ When `cb` is a promise or return a promise, `mood` will wait for the promise to be resolved before triggering a change of state.
+
+### .trigger(event, ...)
 
   Emit an event and trigger a transition  as following:
 
 ```js
-states.emit('lock');
+states.trigger('lock');
 //state is now 'locked'
 ```
 
-  `mood` inherits from [emitter](http://github.com/component/emitter) and can be used as a regular emitter.
+  `mood` is full asynchronous and trigger returns a promise that is resolved when states changes.
 
-
-### .dispatch(event)
-
-Curry emit and return a function that once called trigger a transition:
 
 ```js
-var states = mood('open', {
-  'open' : ['lock', 'locked']
+states.trigger('lock').then(newState => {
+  // do something
 })
-var lock = states.dispatch('lock')
-lock()
 ```
+
+
+  `mood` inherits from [emitter](http://github.com/bredele/zeroin) and can be used as a regular emitter.
+
 
 ## Notes
 
-`states` is part of a collection of asynchronous patterns based on [emitter](http://github.com/component/emitter):
+`mood` is part of a collection of asynchronous patterns based on [emitter](http://github.com/component/emitter):
   - **[doors](http://github.com/bredele/doors)**
   - **[emitter-queue](http://github.com/bredele/emitter-queue)**
