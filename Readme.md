@@ -1,22 +1,28 @@
+
+<p align="center">
+  <img src="https://github.com/bredele/mood/blob/master/mood.png" width="300" height="220" alt="mitt">
+  <br>
+  <a href="https://www.npmjs.org/package/mood"><img src="https://img.shields.io/npm/v/mood.svg?style=flat" alt="npm"></a>
+  <a href="https://travis-ci.org/bredele/mood"><img src="https://travis-ci.org/bredele/mood.svg?branch=master" alt="travis"></a>
+  <a href="https://david-dm.org/bredele/mood"><img src="https://david-dm.org/bredele/mood/status.svg" alt="dependencies Status"></a>
+  <a href='https://github.com/bredele/contributing-guide/blob/master/guidelines.m'><img src="https://bredele.github.io/contributing-guide/community-pledge.svg"></a>
+</p>
+
+
 # Mood
 
-[![Build Status](https://travis-ci.org/bredele/mood.svg?branch=master)](https://travis-ci.org/bredele/mood)
-[![NPM](https://img.shields.io/npm/v/mood.svg)](https://www.npmjs.com/package/mood)
-[![Downloads](https://img.shields.io/npm/dm/mood.svg)](http://npm-stat.com/charts.html?package=mood)
-[![pledge](https://bredele.github.io/contributing-guide/community-pledge.svg)](https://github.com/bredele/contributing-guide/blob/master/guidelines.md)
-
 Mood is an elegant [state machine](https://en.wikipedia.org/wiki/Finite-state_machine#Concepts_and_terminology) you can use to model large number of problems, among which are UI state management, communication protocol design, language parsing, artificial intelligence and other engineering applications.
-
-* **Finite state machine**: Use mood to perform predetermined sequence of actions depending on a sequence of events with which they are presented.
-* **Event emitter**: Mood is based on the [event emitter](http://github.com/component/emitter) pattern that is widely used in the browser and nodejs. Mood is well tested and can be used with nodejs processes, streams and way more.
 
 [Try it online!](http://requirebin.com/?code=79074d59c1525895625c)
 
 ## Usage
 
+Use mood in the browser or Nodejs to perform predetermined sequence of actions depending on a sequence of events with which they are presented.
+
 ```js
 import mood from 'mood'
 
+// add transitions from constructor
 const door = mood('open', {
   'open' :
     ['lock', () => {
@@ -32,8 +38,19 @@ const door = mood('open', {
   ]
 })
 
-door.emit('lock')
-door.emit('break')
+// add new transition
+// if transition returns promise, wait for promise to be resolved to trigger state change
+door.add('closed', 'knock', function () {
+  return new Promise(resolve => setTimeout(resolve, 1000))
+}, 'open')
+
+// trigger open-lock transition
+door.trigger('lock')
+
+// trigger locked-break transition
+door.trigger('break').then(state => {
+  // do something with new state
+})
 ```
 
 Check out our [API](/test) for more information.
