@@ -50,15 +50,15 @@ test('it should change current state when transition added', assert => {
   states.trigger('lock')
   assert.equal(states.current, 'locked')
 })
-//
-// test('it should still change state if transition function is undefined or null', assert => {
-//   assert.plan(1)
-//   var states = mood('open')
-//   states.add('open', 'lock', null, 'locked')
-//   states.emit('lock')
-//   assert.equal(states.current, 'locked')
-// })
-//
+
+test('it should still change state if transition function is undefined or null', assert => {
+  assert.plan(1)
+  var states = mood('open')
+  states.add('open', 'lock', null, 'locked')
+  states.trigger('lock')
+  assert.equal(states.current, 'locked')
+})
+
 // test('it should still change state if transition function does not exist', assert => {
 //   assert.plan(1)
 //   var states = mood('open')

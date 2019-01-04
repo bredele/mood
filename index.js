@@ -22,10 +22,8 @@ module.exports = function (initial, obj) {
 
   machine.add = function (before, event, transition, after) {
     machine.on(before + ' ' + event, function () {
-      if (machine.current === before) {
-        transition()
-        machine.current = after
-      }
+      transition && transition()
+      machine.current = after
     })
   }
 
