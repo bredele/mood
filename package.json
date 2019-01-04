@@ -25,6 +25,7 @@
     "tape": "^4.6.2"
   },
   "dependencies": {
-    "component-emitter": "^1.2.1"
+    "component-emitter": "^1.2.1",
+    "zeroin": "^1.0.0"
   }
 }
