@@ -13,9 +13,11 @@
 
 Mood is an elegant [state machine](https://en.wikipedia.org/wiki/Finite-state_machine#Concepts_and_terminology) you can use to model large number of problems, among which are UI state management, communication protocol design, language parsing, artificial intelligence and other engineering applications.
 
-## Usage
+  - **Finite state machine**: Use mood to perform predetermined sequence of actions depending on a sequence of events with which they are presented.
+  - **Asynchronous**:  Mood plays well with your favourite libraries and use promises to transition from one state to an other.
 
-Use mood in the browser or Nodejs to perform predetermined sequence of actions depending on a sequence of events with which they are presented.
+
+## Usage
 
 ```js
 import mood from 'mood'
