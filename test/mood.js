@@ -14,13 +14,13 @@ test('should be an emitter', assert => {
   assert.equal(typeof states.emit, 'function')
 })
 
-//
-// test('current state should be empty by default', assert => {
-//   assert.plan(1)
-//   var states = mood()
-//   assert.equal(states.current, '')
-// })
-//
+
+test('current state should be empty by default', assert => {
+  assert.plan(1)
+  var states = mood()
+  assert.equal(states.current, '')
+})
+
 //
 // test('it should initialize current state', assert => {
 //   assert.plan(1)
