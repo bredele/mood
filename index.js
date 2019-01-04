@@ -27,7 +27,7 @@ module.exports = function (initial, obj) {
     }
     machine.on(before + ' ' + event, function () {
       transition && transition()
-      machine.current = after
+      machine.current = after || machine.current
     })
   }
 

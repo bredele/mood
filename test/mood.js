@@ -66,14 +66,14 @@ test('it should still change state if transition function does not exist', asser
   states.trigger('lock')
   assert.equal(states.current, 'locked')
 })
-//
-// test('it should not change current state if not new state passed', assert => {
-//   assert.plan(1)
-//   var states = mood('open')
-//   states.add('open', 'lock', function() {})
-//   states.emit('lock')
-//   assert.equal(states.current, 'open')
-// })
+
+test('it should not change current state if not new state passed', assert => {
+  assert.plan(1)
+  var states = mood('open')
+  states.add('open', 'lock', function() {})
+  states.trigger('lock')
+  assert.equal(states.current, 'open')
+})
 //
 // test('it should pass data in the transition callback', assert => {
 //   assert.plan(1)
