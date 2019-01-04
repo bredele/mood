@@ -21,6 +21,10 @@ module.exports = function (initial, obj) {
    */
 
   machine.add = function (before, event, transition, after) {
+    if (typeof transition === 'string') {
+      after = transition
+      transition = null
+    }
     machine.on(before + ' ' + event, function () {
       transition && transition()
       machine.current = after

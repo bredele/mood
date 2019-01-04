@@ -13,6 +13,7 @@ test('should be an emitter', assert => {
   assert.equal(typeof states.once, 'function')
   assert.equal(typeof states.emit, 'function')
 })
+
 test('current state should be empty by default', assert => {
   assert.plan(1)
   var states = mood()
@@ -24,7 +25,6 @@ test('it should initialize current state', assert => {
   var states = mood('open')
   assert.equal(states.current, 'open')
 })
-
 
 test('it should initialize current state from a function', assert => {
   assert.plan(1)
@@ -59,13 +59,13 @@ test('it should still change state if transition function is undefined or null',
   assert.equal(states.current, 'locked')
 })
 
-// test('it should still change state if transition function does not exist', assert => {
-//   assert.plan(1)
-//   var states = mood('open')
-//   states.add('open', 'lock', 'locked')
-//   states.emit('lock')
-//   assert.equal(states.current, 'locked')
-// })
+test('it should still change state if transition function does not exist', assert => {
+  assert.plan(1)
+  var states = mood('open')
+  states.add('open', 'lock', 'locked')
+  states.trigger('lock')
+  assert.equal(states.current, 'locked')
+})
 //
 // test('it should not change current state if not new state passed', assert => {
 //   assert.plan(1)
