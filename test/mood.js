@@ -13,14 +13,11 @@ test('should be an emitter', assert => {
   assert.equal(typeof states.once, 'function')
   assert.equal(typeof states.emit, 'function')
 })
-
-
 test('current state should be empty by default', assert => {
   assert.plan(1)
   var states = mood()
   assert.equal(states.current, '')
 })
-
 
 test('it should initialize current state', assert => {
   assert.plan(1)
@@ -28,13 +25,13 @@ test('it should initialize current state', assert => {
   assert.equal(states.current, 'open')
 })
 
-//
-// test('it should initialize current state from a function', assert => {
-//   assert.plan(1)
-//   var states = mood(() => 'open')
-//   assert.equal(states.current, 'open')
-// })
-//
+
+test('it should initialize current state from a function', assert => {
+  assert.plan(1)
+  var states = mood(() => 'open')
+  assert.equal(states.current, 'open')
+})
+
 // test('it should add a transition', assert => {
 //   assert.plan(1)
 //   var locked = false

@@ -12,7 +12,7 @@ module.exports = function (initial, obj) {
    * @type {String}
    */
 
-  machine.current = initial || ''
+  machine.current = (typeof initial === 'function' ? initial() : initial) || ''
 
   return machine
 }
