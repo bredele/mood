@@ -62,5 +62,7 @@ module.exports = function (initial, obj) {
     })
   }
 
+  if (obj) machine.add(obj)
+
   return machine
 }
