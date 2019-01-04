@@ -4,6 +4,14 @@
 
 var emitter = require('zeroin')
 
+/**
+ * Mood constructor.
+ *
+ * @param {String|Function} initial
+ * @param {Object?} transitions 
+ * @api public
+ */
+
 module.exports = function (initial, obj) {
   var machine = emitter({})
 
@@ -17,7 +25,11 @@ module.exports = function (initial, obj) {
   /**
    * Add transition.
    *
-   * @api public
+   * @param {String} before
+   * @param {String} event
+   * @param {Function?|String} transition
+   * @param {String?} after
+   * @api private
    */
 
   var add = function (before, event, transition, after) {
@@ -39,6 +51,21 @@ module.exports = function (initial, obj) {
   /**
    * Add transition.
    *
+   * Examples:
+   *
+   *  machine.add('open', 'lock', 'locked')
+   *  machine.add('open', 'lock', fn, 'locked')
+   *  machine.add('open', 'lock', null, 'locked')
+   *  machine.add('open', 'lock', promise, 'locked')
+   *  machine.add('open', 'lock', () => promise, 'locked')
+   *  machine.add({
+   *    open: [['lock', 'locked'], ['unlock', fn, 'open']]
+   *  })
+   *
+   * @param {String} before
+   * @param {String} event
+   * @param {Function?|String} transition
+   * @param {String?} after
    * @api public
    */
 
@@ -52,6 +79,20 @@ module.exports = function (initial, obj) {
     } else add(before, event, transition, after)
   }
 
+  /**
+   * Trigger transition.
+   * All arguments following the event name are passed to a transition.
+   *
+   * Examples:
+   *
+   *  machine.trigger('knock')
+   *  machine.trigger('knock', data)
+   *
+   * @param {String} topic
+   * @return {Promise}
+   * @api public
+   */
+
   machine.trigger = function (topic) {
     var args = [].slice.call(arguments, 1)
     return new Promise(function (resolve) {
@@ -62,6 +103,7 @@ module.exports = function (initial, obj) {
     })
   }
 
+  // add transitions on construct
   if (obj) machine.add(obj)
 
   return machine
