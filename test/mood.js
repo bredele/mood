@@ -103,6 +103,18 @@ test('should accept promises as transition', assert => {
   promise.then(() => assert.equal(states.current, 'locked'))
 })
 
+test('should accept function transition returning promises and change state only when resolved', assert => {
+  assert.plan(2)
+  var states = mood('open')
+  states.add('open', 'lock', () => {
+    return new Promise(resolve => setTimeout(resolve, 500))
+  }, 'locked')
+  states.trigger('lock').then(state => {
+    assert.equal(states.current, 'locked')
+    assert.equal(state, 'locked')
+  })
+})
+
 //
 // test('should add multiple transition from the add handler', assert => {
 //   assert.plan(6)
