@@ -63,32 +63,20 @@ states.add({
 });
 ```
 
-### .emit(event, ...)
+### .trigger(event, ...)
 
   Emit an event and trigger a transition  as following:
 
 ```js
-states.emit('lock');
+states.trigger('lock');
 //state is now 'locked'
 ```
 
-  `mood` inherits from [emitter](http://github.com/component/emitter) and can be used as a regular emitter.
+  `mood` inherits from [emitter](http://github.com/bredele/zeroin) and can be used as a regular emitter.
 
-
-### .dispatch(event)
-
-Curry emit and return a function that once called trigger a transition:
-
-```js
-var states = mood('open', {
-  'open' : ['lock', 'locked']
-})
-var lock = states.dispatch('lock')
-lock()
-```
 
 ## Notes
 
-`states` is part of a collection of asynchronous patterns based on [emitter](http://github.com/component/emitter):
+`mood` is part of a collection of asynchronous patterns based on [emitter](http://github.com/component/emitter):
   - **[doors](http://github.com/bredele/doors)**
   - **[emitter-queue](http://github.com/bredele/emitter-queue)**
