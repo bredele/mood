@@ -138,31 +138,31 @@ test('transition with condition', assert => {
 })
 
 test('execute transition with condition and does not change current state', assert => {
-  assert.plan(2)
+  assert.plan(3)
+  let i = 0
   const machine = mood({
     'before': ['condition', function () {
-      assert.ok('executed')
+      assert.equal(i++, 0)
     }]
   })
   machine.trigger('condition').then(state => {
+    assert.equal(i, 1)
     assert.equal(state, 'before')
   })
 })
-//
-// test(`transition to 'resolution' state`, assert => {
-//   assert.plan(2)
-//   const machine = mood({
-//     'before': [function () {
-//       return 'something'
-//     }, 'resolved'],
-//     'resolved': [function () {
-//       assert.ok('executed')
-//       // @note should speify in documentation that should use this. to avoid initialization issues
-//       assert.equal(this.state(), 'resolved')
-//     }]
-//   })
-// })
-//
+
+test(`transition to 'resolution' state with condition`, assert => {
+  assert.plan(1)
+  const machine = mood({
+    'before': [function () {
+      return 'something'
+    }, 'resolved']
+  })
+  machine.trigger('condition').then(state => {
+    assert.equal(state, 'resolved')
+  })
+})
+
 // test('pass transition result to next state', assert => {
 //   assert.plan(1)
 //   const machine = mood({
