@@ -19,8 +19,7 @@ module.exports = (init, map) => {
     add (before, event, transition, after) {
       if (typeof event === 'function') {
         machine.on(before, (...args) => {
-          event.call(machine, ...args)
-          this.state(transition)
+          this.state(transition, event.call(machine, ...args))
         })
       } else {
 
@@ -35,10 +34,10 @@ module.exports = (init, map) => {
      * @public
      */
 
-    state(str) {
+    state(str, ...args) {
       if (str) {
         state = str
-        machine.emit(state)
+        machine.emit(state, ...args)
       } else return state
     }
   })
