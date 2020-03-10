@@ -37,7 +37,8 @@ test('should add state entry transition and transition state', assert => {
     }, 'after'],
     'after': [function () {
       assert.ok('executed')
-      assert.equal(machine.state(), 'after')
+      // @note should speify in documentation that should use this. to avoid initialization issues
+      assert.equal(this.state(), 'after')
     }]
   })
 })

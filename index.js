@@ -7,8 +7,8 @@ const emitter = require('zeroin')
 
 module.exports = (init, map) => {
 
-  let state = current(map || init)
-  
+  let state
+
   const machine = emitter({
     /**
      * Add state.
@@ -19,7 +19,7 @@ module.exports = (init, map) => {
     add (before, event, transition, after) {
       if (typeof event === 'function') {
         machine.on(before, (...args) => {
-          event(...args)
+          event.call(machine, ...args)
           this.state(transition)
         })
       } else {
@@ -43,7 +43,7 @@ module.exports = (init, map) => {
     }
   })
   add(machine, map || init)
-  machine.emit(state)
+  machine.state(current(map || init))
   return machine
 }
 
