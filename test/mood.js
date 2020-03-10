@@ -29,6 +29,18 @@ test('should add state entry transition', assert => {
   })
 })
 
+test('should not change state if resolved state not specified', assert => {
+  assert.plan(2)
+  const machine = mood({
+    'before': [function () {
+      assert.ok('executed')
+    }]
+  })
+  setTimeout(() => {
+    assert.equal(machine.state(), 'before')
+  }, 30)
+})
+
 test('should have resolved state', assert => {
   assert.plan(2)
   const machine = mood({
