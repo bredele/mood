@@ -29,33 +29,33 @@ test('should add state entry transition', assert => {
   })
 })
 
-test('should add state entry transition and transition state', assert => {
+test('should have resolved state', assert => {
   assert.plan(2)
   const machine = mood({
     'before': [function () {
       return 'something'
-    }, 'after'],
-    'after': [function () {
+    }, 'resolved'],
+    'resolved': [function () {
       assert.ok('executed')
       // @note should speify in documentation that should use this. to avoid initialization issues
-      assert.equal(this.state(), 'after')
+      assert.equal(this.state(), 'resolved')
     }]
   })
 })
 
-test('should pass transition result to the next state', assert => {
+test('should have resolved state and pass the returned value of the transition function', assert => {
   assert.plan(1)
   const machine = mood({
     'before': [function () {
       return 'something'
-    }, 'after'],
-    'after': [function (arg) {
+    }, 'resolved'],
+    'resolved': [function (arg) {
       assert.equal(arg, 'something')
     }]
   })
 })
 
-test('should resolve transition and pass value to the next state', assert => {
+test('should have resolved state and resolve transitions as promises', assert => {
   assert.plan(1)
   const machine = mood({
     'before': [function () {
@@ -67,7 +67,7 @@ test('should resolve transition and pass value to the next state', assert => {
   })
 })
 
-test('should reject transition and transition to rejection state', assert => {
+test('should have rejection state', assert => {
   assert.plan(1)
   const machine = mood({
     'before': [function () {
@@ -78,6 +78,18 @@ test('should reject transition and transition to rejection state', assert => {
     }],
     'rejected': [function (arg) {
       assert.ok('resjected state')
+    }]
+  })
+})
+
+test('should have rejection state and and reject transitions as promises', assert => {
+  assert.plan(1)
+  const machine = mood({
+    'before': [function () {
+      return Promise.reject('something')
+    }, 'resolved', 'rejected'],
+    'rejected': [function (arg) {
+      assert.equal(arg, 'something')
     }]
   })
 })
