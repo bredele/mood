@@ -260,7 +260,7 @@ test('dynamic transition state', assert => {
     'success': [function () {
       assert.ok('success')
       return Promise.reject('failure')
-    }, 'end', arg => arg],
+    }, 'end', arg => Promise.resolve(arg)],
     'failure': [function () {
       assert.ok('failure')
     }]
