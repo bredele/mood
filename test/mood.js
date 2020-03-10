@@ -20,6 +20,10 @@ test('initialize state machine with state resolution map', assert => {
   assert.equal(machine.state(), 'init')
 })
 
+/**
+ * Without condition
+ */
+
 test('execution transition without condition', assert => {
   assert.plan(1)
   const machine = mood({
@@ -119,6 +123,10 @@ test('reject transition and pass result to rejected state', assert => {
   })
 })
 
+/**
+ * With condition
+ */
+
 test('transition with condition', assert => {
   assert.plan(1)
   const machine = mood({
@@ -128,6 +136,96 @@ test('transition with condition', assert => {
   })
   machine.trigger('condition')
 })
+
+test('execute transition with condition and does not change current state', assert => {
+  assert.plan(2)
+  const machine = mood({
+    'before': ['condition', function () {
+      assert.ok('executed')
+    }]
+  })
+  machine.trigger('condition').then(state => {
+    assert.equal(state, 'before')
+  })
+})
+//
+// test(`transition to 'resolution' state`, assert => {
+//   assert.plan(2)
+//   const machine = mood({
+//     'before': [function () {
+//       return 'something'
+//     }, 'resolved'],
+//     'resolved': [function () {
+//       assert.ok('executed')
+//       // @note should speify in documentation that should use this. to avoid initialization issues
+//       assert.equal(this.state(), 'resolved')
+//     }]
+//   })
+// })
+//
+// test('pass transition result to next state', assert => {
+//   assert.plan(1)
+//   const machine = mood({
+//     'before': [function () {
+//       return 'something'
+//     }, 'resolved'],
+//     'resolved': [function (arg) {
+//       assert.equal(arg, 'something')
+//     }]
+//   })
+// })
+//
+// test('resolve transition and pass result to resolution state', assert => {
+//   assert.plan(1)
+//   const machine = mood({
+//     'before': [function () {
+//       return Promise.resolve('something')
+//     }, 'resolved'],
+//     'resolved': [function (arg) {
+//       assert.equal(arg, 'something')
+//     }]
+//   })
+// })
+//
+// test(`transition to 'rejection' state`, assert => {
+//   assert.plan(1)
+//   const machine = mood({
+//     'before': [function () {
+//       return Promise.reject('something')
+//     }, 'resolved', 'rejected'],
+//     'resolved': [function (arg) {
+//       assert.fail('should not be after')
+//     }],
+//     'rejected': [function (arg) {
+//       assert.ok('resjected state')
+//     }]
+//   })
+// })
+//
+// test('reject transition and does not change current state', assert => {
+//   assert.plan(2)
+//   const machine = mood({
+//     'before': [function () {
+//       assert.ok('executed')
+//       return Promise.reject('something')
+//     }, 'resolved']
+//   })
+//   setTimeout(() => {
+//     assert.equal(machine.state(), 'before')
+//   }, 30)
+// })
+//
+// test('reject transition and pass result to rejected state', assert => {
+//   assert.plan(1)
+//   const machine = mood({
+//     'before': [function () {
+//       return Promise.reject('something')
+//     }, 'resolved', 'rejected'],
+//     'rejected': [function (arg) {
+//       assert.equal(arg, 'something')
+//     }]
+//   })
+// })
 
 
 // do this test after trigger (based on parameters passed)
