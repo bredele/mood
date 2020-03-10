@@ -227,10 +227,10 @@ test('no transition', assert => {
 /**
  * Multiple transitions/conditions.
  */
- 
+
 test('add multiple transitions', assert => {
   assert.plan(2)
-  const machine = mood({
+  const machine = mood('before', {
     'before': [
       ['condition1', 'after'],
       ['condition3', function () {

@@ -4,12 +4,29 @@
 
 const emitter = require('zeroin')
 
+/**
+ * Create finite state machine.
+ *
+ * @param {String?} init state
+ * @param {Object?} map 
+ * @return {Emitter}
+ * @public
+ */
 
 module.exports = (init, map) => {
-
   let state = current(map || init)
-
   const machine = emitter()
+
+  /**
+   * Add transition.
+   *
+   * @param {String} topic
+   * @param {String?} condition
+   * @param {Function} transition
+   * @param {String} resolved
+   * @param {String?} rejected
+   * @private
+   */
 
   const add = function (topic, transition, resolved, rejected){
     return new Promise(resolve => {
@@ -23,11 +40,33 @@ module.exports = (init, map) => {
     })
   }
 
-  machine.add = function (before, condition, transition, resolved, rejected) {
-    if (condition instanceof Array) {
+  /**
+   * Add state machine transition.
+   *
+   * Examples:
+   *
+   *  machine.add('before', 'condition', cb, 'after')
+   *  machine.add('before', cb)
+   *  machine.add('before', cb, 'after')
+   *  machine.add('before', 'condition', 'after')
+   *  machine.add('before', 'condition', () => {
+   *    return Promise.resolve('something')
+   *  }, 'resolved')
+   *  machine.add('before', 'condition', () => {
+   *    return Promise.reject('something')
+   *  }, 'resolved', 'rejected')
+   *
+   * @param {String} topic
+   * @param {String | Function} condition
+   * @param {Function | String} transition
+   * @param {String?} resolved
+   * @param {String?} rejected
+   * @public
+   */
 
-    } else if (typeof condition === 'function') {
-      add(before, condition, transition, resolved)
+  machine.add = function (topic, condition, transition, resolved, rejected) {
+    if (typeof condition === 'function') {
+      add(topic, condition, transition, resolved)
     } else {
       if (typeof transition === 'string') {
         resolved = transition
@@ -37,11 +76,43 @@ module.exports = (init, map) => {
     }
   }
 
+  /**
+   * Trigger transition by emitting condition
+   * on current state.
+   *
+   * Transitions are synchronous and this method returns
+   * a promise that resolve with new state.
+   *
+   * Examples:
+   *
+   *  machine.trigger('condition')
+   *    .then(state => console.log(state))
+   *
+   *
+   * @param {String} condition
+   * @return {Promise}
+   * @public
+   */
+
   machine.trigger = function (condition, ...args) {
     return new Promise(resolve => {
       machine.emit(state + ' ' + condition, args, resolve)
     })
   }
+
+  /**
+   * Set state or return current state.
+   *
+   * Examples:
+   *
+   *  machine.state('opened')
+   *  machine.state()
+   *  // => opened
+   *
+   * @param {String?}
+   * @return {String}
+   * @public
+   */
 
   machine.state = function (str, ...args) {
     if (str) {
