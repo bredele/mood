@@ -154,7 +154,7 @@ test('execute transition with condition and does not change current state', asse
 test(`transition to 'resolution' state with condition`, assert => {
   assert.plan(1)
   const machine = mood({
-    'before': [function () {
+    'before': ['condition', function () {
       return 'something'
     }, 'resolved']
   })

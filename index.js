@@ -26,16 +26,17 @@ module.exports = (init, map) => {
             )
         })
       } else {
-        machine.on(state + ' ' + condition, (...args) => {
+        machine.on(state + ' ' + condition, (args, resolve) => {
           transition.call(machine, ...args)
+          if (resolved) this.state(resolved, ...args)
+          resolve(resolved || state)
         })
       }
     },
 
     trigger (condition, ...args) {
       return new Promise(resolve => {
-        machine.emit(state + ' ' + condition, ...args)
-        resolve(state)
+        machine.emit(state + ' ' + condition, args, resolve)
       })
     },
 
