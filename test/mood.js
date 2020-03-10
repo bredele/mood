@@ -196,19 +196,18 @@ test(`transition to 'rejection' state with condition`, assert => {
     assert.equal(state, 'rejected')
   })
 })
-//
-// test('reject transition and does not change current state', assert => {
-//   assert.plan(2)
-//   const machine = mood({
-//     'before': [function () {
-//       assert.ok('executed')
-//       return Promise.reject('something')
-//     }, 'resolved']
-//   })
-//   setTimeout(() => {
-//     assert.equal(machine.state(), 'before')
-//   }, 30)
-// })
+
+test('reject transition with condition and does not change current state', assert => {
+  assert.plan(1)
+  const machine = mood({
+    'before': ['condition', function () {
+      return Promise.reject('something')
+    }, 'resolved']
+  })
+  machine.trigger('condition').then(state => {
+    assert.equal(state, 'before')
+  })
+})
 //
 // test('reject transition and pass result to rejected state', assert => {
 //   assert.plan(1)
