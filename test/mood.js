@@ -256,12 +256,9 @@ test('dynamic transition state', assert => {
   const machine = mood({
     'before': ['condition', function (arg) {
       return arg
-    }, (arg) => {
-      console.log('ARG', arg)
-      return arg
-    }],
+    }, (arg) => arg],
     'success': [function () {
-      assert.ok('success')
+      assert.ok(arg)
     }]
   })
   machine.trigger('condition', 'success')
