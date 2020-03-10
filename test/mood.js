@@ -82,6 +82,18 @@ test('should have rejection state', assert => {
   })
 })
 
+test('should reject transition', assert => {
+  assert.plan(1)
+  const machine = mood({
+    'before': [function () {
+      return Promise.reject('something')
+    }, 'resolved']
+  })
+  setTimeout(() => {
+    assert.equal(machine.state(), 'before')
+  }, 30)
+})
+
 test('should have rejection state and and reject transitions as promises', assert => {
   assert.plan(1)
   const machine = mood({
