@@ -27,9 +27,13 @@ module.exports = (init, map) => {
         })
       } else {
         machine.on(state + ' ' + condition, (args, resolve) => {
-          transition.call(machine, ...args)
-          if (resolved) this.state(resolved, ...args)
-          resolve(resolved || state)
+          Promise.resolve(transition.call(machine, ...args))
+            .then(
+              (...attrs) => {
+                this.state(resolved, ...attrs)
+                resolve(resolved || state)
+              }
+            )
         })
       }
     },

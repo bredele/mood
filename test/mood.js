@@ -173,17 +173,17 @@ test('pass arguments to the transition function', assert => {
   machine.trigger('condition', 'something')
 })
 
-// test('resolve transition and pass result to resolution state', assert => {
-//   assert.plan(1)
-//   const machine = mood({
-//     'before': [function () {
-//       return Promise.resolve('something')
-//     }, 'resolved'],
-//     'resolved': [function (arg) {
-//       assert.equal(arg, 'something')
-//     }]
-//   })
-// })
+test(`transition to 'resolution' state with condition and only once transition is resolved`, assert => {
+  assert.plan(1)
+  const machine = mood({
+    'before': ['condition', function () {
+      return new Promise(resolve => setTimeout(resolve, 30))
+    }, 'resolved']
+  })
+  machine.trigger('condition').then(state => {
+    assert.equal(state, 'resolved')
+  })
+})
 //
 // test(`transition to 'rejection' state`, assert => {
 //   assert.plan(1)
