@@ -5,13 +5,13 @@
 var test = require('tape')
 var mood = require('..')
 
-test('shoud initialize state machine with state', assert => {
+test('initialize state machine with state', assert => {
   assert.plan(1)
   const machine = mood('init')
   assert.equal(machine.state(), 'init')
 })
 
-test('should initialize state machine with state map', assert => {
+test('initialize state machine with state map', assert => {
   assert.plan(1)
   const machine = mood({
     'init': [],
@@ -20,7 +20,7 @@ test('should initialize state machine with state map', assert => {
   assert.equal(machine.state(), 'init')
 })
 
-test('should add state entry transition', assert => {
+test('execution transition without condition', assert => {
   assert.plan(1)
   const machine = mood({
     'before': [function () {
@@ -29,7 +29,7 @@ test('should add state entry transition', assert => {
   })
 })
 
-test('should not change state if resolved state not specified', assert => {
+test('execute transition and does not change current state', assert => {
   assert.plan(2)
   const machine = mood({
     'before': [function () {
@@ -41,7 +41,7 @@ test('should not change state if resolved state not specified', assert => {
   }, 30)
 })
 
-test('should have resolved state', assert => {
+test(`transition to 'resolution' state`, assert => {
   assert.plan(2)
   const machine = mood({
     'before': [function () {
@@ -55,7 +55,7 @@ test('should have resolved state', assert => {
   })
 })
 
-test('should have resolved state and pass the returned value of the transition function', assert => {
+test('pass transition result to next state', assert => {
   assert.plan(1)
   const machine = mood({
     'before': [function () {
@@ -67,7 +67,7 @@ test('should have resolved state and pass the returned value of the transition f
   })
 })
 
-test('should have resolved state and resolve transitions as promises', assert => {
+test('resolve transition and pass result to resolution state', assert => {
   assert.plan(1)
   const machine = mood({
     'before': [function () {
@@ -79,7 +79,7 @@ test('should have resolved state and resolve transitions as promises', assert =>
   })
 })
 
-test('should have rejection state', assert => {
+test(`transition to 'rejection' state`, assert => {
   assert.plan(1)
   const machine = mood({
     'before': [function () {
@@ -94,10 +94,11 @@ test('should have rejection state', assert => {
   })
 })
 
-test('should reject transition', assert => {
-  assert.plan(1)
+test('reject transition and does not change current state', assert => {
+  assert.plan(2)
   const machine = mood({
     'before': [function () {
+      assert.ok('executed')
       return Promise.reject('something')
     }, 'resolved']
   })
@@ -106,7 +107,7 @@ test('should reject transition', assert => {
   }, 30)
 })
 
-test('should have rejection state and and reject transitions as promises', assert => {
+test('reject transition and pass result to rejected state', assert => {
   assert.plan(1)
   const machine = mood({
     'before': [function () {
