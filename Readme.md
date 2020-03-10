@@ -14,7 +14,7 @@
 Mood is an elegant [state machine](https://en.wikipedia.org/wiki/Finite-state_machine#Concepts_and_terminology) you can use to model large number of problems, among which are UI state management, communication protocol design, language parsing, artificial intelligence and other engineering applications.
 
   - **Finite state machine**: Use mood to perform predetermined sequence of actions depending on a sequence of events with which they are presented.
-  - **Asynchronous**:  Mood plays well with your favourite libraries and use promises to transition from one state to an other.
+  - **Asynchronous**:  Mood plays well with your favorite libraries and use promises to transition from one state to an other.
 
 
 ## Usage
@@ -23,7 +23,7 @@ Mood is an elegant [state machine](https://en.wikipedia.org/wiki/Finite-state_ma
 import mood from 'mood'
 
 // add transitions from constructor
-const door = mood('open', {
+const door = mood('init', {
   'open' :
     ['lock', () => {
       // do something when the current state is 'open'
