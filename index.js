@@ -16,10 +16,14 @@ module.exports = (init, map) => {
      * @private
      */
 
-    add (before, event, transition, after) {
+    add (before, event, transition, resolved, rejected) {
       if (typeof event === 'function') {
         machine.on(before, (...args) => {
-          this.state(transition, event.call(machine, ...args))
+          Promise.resolve(event.call(machine, ...args))
+            .then(
+              (...attrs) => this.state(transition, ...attrs),
+              (...attrs) => this.state(resolved, ...attrs)
+            )
         })
       } else {
 

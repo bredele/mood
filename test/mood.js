@@ -54,3 +54,30 @@ test('should pass transition result to the next state', assert => {
     }]
   })
 })
+
+test('should resolve transition and pass value to the next state', assert => {
+  assert.plan(1)
+  const machine = mood({
+    'before': [function () {
+      return Promise.resolve('something')
+    }, 'resolved'],
+    'resolved': [function (arg) {
+      assert.equal(arg, 'something')
+    }]
+  })
+})
+
+test('should reject transition and transition to rejection state', assert => {
+  assert.plan(1)
+  const machine = mood({
+    'before': [function () {
+      return Promise.reject('something')
+    }, 'resolved', 'rejected'],
+    'resolved': [function (arg) {
+      assert.fail('should not be after')
+    }],
+    'rejected': [function (arg) {
+      assert.ok('resjected state')
+    }]
+  })
+})
