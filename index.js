@@ -7,7 +7,7 @@ const emitter = require('zeroin')
 
 module.exports = (init, map) => {
 
-  let state
+  let state = current(map || init)
 
   const machine = emitter({
     /**
@@ -16,18 +16,24 @@ module.exports = (init, map) => {
      * @private
      */
 
-    add (before, event, transition, resolved, rejected) {
-      if (typeof event === 'function') {
+    add (before, condition, transition, resolved, rejected) {
+      if (typeof condition === 'function') {
         machine.on(before, (...args) => {
-          Promise.resolve(event.call(machine, ...args))
+          Promise.resolve(condition.call(machine, ...args))
             .then(
               (...attrs) => this.state(transition, ...attrs),
               (...attrs) => this.state(resolved, ...attrs)
             )
         })
       } else {
-
+        machine.on(state + ' ' + condition, (...args) => {
+          transition.call(machine, ...args)
+        })
       }
+    },
+
+    trigger (condition, ...args) {
+      machine.emit(state + ' ' + condition, ...args)
     },
 
     /**
@@ -46,7 +52,7 @@ module.exports = (init, map) => {
     }
   })
   add(machine, map || init)
-  machine.state(current(map || init))
+  machine.state(state)
   return machine
 }
 

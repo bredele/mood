@@ -11,7 +11,7 @@ test('initialize state machine with state', assert => {
   assert.equal(machine.state(), 'init')
 })
 
-test('initialize state machine with state map', assert => {
+test('initialize state machine with state resolution map', assert => {
   assert.plan(1)
   const machine = mood({
     'init': [],
@@ -118,3 +118,27 @@ test('reject transition and pass result to rejected state', assert => {
     }]
   })
 })
+
+test('transition with condition', assert => {
+  assert.plan(1)
+  const machine = mood({
+    'before': ['condition', function () {
+      assert.ok('executed')
+    }]
+  })
+  machine.trigger('condition')
+})
+
+
+// do this test after trigger (based on parameters passed)
+// test('dynamic state resolution', assert => {
+//   assert.plan(2)
+//   const machine = mood({
+//     'before': [function () {
+//       return 'something'
+//     }, 'success'],
+//     'success': [function () {
+//       assert.ok('success')
+//     }]
+//   })
+// })
