@@ -208,18 +208,21 @@ test('reject transition with condition and does not change current state', asser
     assert.equal(state, 'before')
   })
 })
-//
-// test('reject transition and pass result to rejected state', assert => {
-//   assert.plan(1)
-//   const machine = mood({
-//     'before': [function () {
-//       return Promise.reject('something')
-//     }, 'resolved', 'rejected'],
-//     'rejected': [function (arg) {
-//       assert.equal(arg, 'something')
-//     }]
-//   })
-// })
+
+/**
+ * No transition
+ */
+
+test('no transition', assert => {
+  assert.plan(1)
+  const machine = mood({
+    'before': ['condition', 'resolved']
+  })
+  machine.trigger('condition').then(state => {
+    assert.equal(state, 'resolved')
+  })
+})
+
 
 
 // do this test after trigger (based on parameters passed)

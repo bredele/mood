@@ -9,61 +9,47 @@ module.exports = (init, map) => {
 
   let state = current(map || init)
 
-  const machine = emitter({
-    /**
-     * Add state.
-     *
-     * @private
-     */
+  const machine = emitter()
 
-    add (before, condition, transition, resolved, rejected) {
-      if (typeof condition === 'function') {
-        machine.on(before, (...args) => {
-          Promise.resolve(condition.call(machine, ...args))
-            .then(
-              (...attrs) => this.state(transition, ...attrs),
-              (...attrs) => this.state(resolved, ...attrs)
-            )
-        })
-      } else {
-        machine.on(state + ' ' + condition, (args, resolve) => {
-          Promise.resolve(transition.call(machine, ...args))
-            .then(
-              (...attrs) => {
-                this.state(resolved, ...attrs)
-                resolve(resolved || state)
-              },
-              (...attrs) => {
-                this.state(rejected, ...attrs)
-                resolve(rejected || state)
-              }
-            )
-        })
-      }
-    },
-
-    trigger (condition, ...args) {
-      return new Promise(resolve => {
-        machine.emit(state + ' ' + condition, args, resolve)
+  const add = function (topic, transition, resolved, rejected){
+    return new Promise(resolve => {
+      machine.on(topic, (args, cb) => {
+        Promise.resolve(transition.call(machine, ...args))
+          .then(
+            (...attrs) => machine.state(resolved, ...attrs),
+            (...attrs) => machine.state(rejected, ...attrs)
+          ).then(cb)
       })
-    },
+    })
+  }
 
-    /**
-     * Set or get current state.
-     *
-     * @param {String?} str
-     * @return {String}
-     * @public
-     */
-
-    state(str, ...args) {
-      if (str) {
-        state = str
-        machine.emit(state, ...args)
-      } else return state
+  machine.add = function (before, condition, transition, resolved, rejected) {
+    if (typeof condition === 'function') {
+      add(before, condition, transition, resolved)
+    } else {
+      if (typeof transition === 'string') {
+        resolved = transition
+        transition = (...args) => Promise.resolve(args)
+      }
+      add(state + ' ' + condition, transition, resolved, rejected)
     }
-  })
-  add(machine, map || init)
+  }
+
+  machine.trigger = function (condition, ...args) {
+    return new Promise(resolve => {
+      machine.emit(state + ' ' + condition, args, resolve)
+    })
+  }
+
+  machine.state = function (str, ...args) {
+    if (str) {
+      state = str
+      machine.emit(state, args)
+      return state
+    } else return state
+  }
+
+  initialize(machine, map || init)
   machine.state(state)
   return machine
 }
@@ -76,7 +62,7 @@ module.exports = (init, map) => {
  * @private
  */
 
-function add (machine, map = {}) {
+function initialize (machine, map = {}) {
   if (typeof map === 'object') Object.keys(map).map(key => machine.add(key, ...map[key]))
 }
 
