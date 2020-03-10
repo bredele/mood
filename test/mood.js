@@ -30,11 +30,14 @@ test('should add state entry transition', assert => {
 })
 
 test('should add state entry transition and transition state', assert => {
-  assert.plan(1)
+  assert.plan(2)
   const machine = mood({
     'before': [function () {
       return 'something'
-    }, 'after']
+    }, 'after'],
+    'after': [function () {
+      assert.ok('executed')
+      assert.equal(machine.state(), 'after')
+    }]
   })
-  assert.equal(machine.state(), 'after')
 })
