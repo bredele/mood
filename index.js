@@ -32,6 +32,10 @@ module.exports = (init, map) => {
               (...attrs) => {
                 this.state(resolved, ...attrs)
                 resolve(resolved || state)
+              },
+              (...attrs) => {
+                this.state(rejected, ...attrs)
+                resolve(rejected || state)
               }
             )
         })

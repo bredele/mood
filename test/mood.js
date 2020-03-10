@@ -184,21 +184,18 @@ test(`transition to 'resolution' state with condition and only once transition i
     assert.equal(state, 'resolved')
   })
 })
-//
-// test(`transition to 'rejection' state`, assert => {
-//   assert.plan(1)
-//   const machine = mood({
-//     'before': [function () {
-//       return Promise.reject('something')
-//     }, 'resolved', 'rejected'],
-//     'resolved': [function (arg) {
-//       assert.fail('should not be after')
-//     }],
-//     'rejected': [function (arg) {
-//       assert.ok('resjected state')
-//     }]
-//   })
-// })
+
+test(`transition to 'rejection' state with condition`, assert => {
+  assert.plan(1)
+  const machine = mood({
+    'before': ['condition', function () {
+      return Promise.reject('something')
+    }, 'resolved', 'rejected']
+  })
+  machine.trigger('condition').then(state => {
+    assert.equal(state, 'rejected')
+  })
+})
 //
 // test('reject transition and does not change current state', assert => {
 //   assert.plan(2)
