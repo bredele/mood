@@ -247,17 +247,22 @@ test('add multiple transitions', assert => {
 })
 
 
+/**
+ * Dynamic transition state.
+ */
 
-
-// do this test after trigger (based on parameters passed)
-// test('dynamic state resolution', assert => {
-//   assert.plan(2)
-//   const machine = mood({
-//     'before': [function () {
-//       return 'something'
-//     }, 'success'],
-//     'success': [function () {
-//       assert.ok('success')
-//     }]
-//   })
-// })
+test('dynamic transition state', assert => {
+  assert.plan(1)
+  const machine = mood({
+    'before': ['condition', function (arg) {
+      return arg
+    }, (arg) => {
+      console.log('ARG', arg)
+      return arg
+    }],
+    'success': [function () {
+      assert.ok('success')
+    }]
+  })
+  machine.trigger('condition', 'success')
+})

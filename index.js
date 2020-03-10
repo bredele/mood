@@ -8,7 +8,7 @@ const emitter = require('zeroin')
  * Create finite state machine.
  *
  * @param {String?} init state
- * @param {Object?} map 
+ * @param {Object?} map
  * @return {Emitter}
  * @public
  */
@@ -33,8 +33,14 @@ module.exports = (init, map) => {
       machine.on(topic, (args, cb) => {
         Promise.resolve(transition.call(machine, ...args))
           .then(
-            (...attrs) => machine.state(resolved, ...attrs),
-            (...attrs) => machine.state(rejected, ...attrs)
+            (...attrs) => {
+              return Promise.resolve(callbackify(resolved)(...attrs))
+                .then(str => machine.state(str, ...attrs))
+            },
+            (...attrs) =>{
+              return Promise.resolve(callbackify(rejected)(...attrs))
+                .then(str => machine.state(str, ...attrs))
+            }
           ).then(cb)
       })
     })
@@ -42,6 +48,9 @@ module.exports = (init, map) => {
 
   /**
    * Add state machine transition.
+   *
+   * A transition occurs when a given condition (optional) is triggered
+   * and can change the state machine current state.
    *
    * Examples:
    *
@@ -125,6 +134,19 @@ module.exports = (init, map) => {
   initialize(machine, map || init)
   machine.state(state)
   return machine
+}
+
+/**
+ * Transform string or null/undefined values
+ * into callbacks.
+ *
+ * @param {String?|Function?} cb
+ * @return {Function}
+ * @private
+ */
+
+function callbackify (cb = () => {}) {
+  return typeof cb === 'string' ? () => cb : cb
 }
 
 /**
