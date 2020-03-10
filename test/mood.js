@@ -252,13 +252,17 @@ test('add multiple transitions', assert => {
  */
 
 test('dynamic transition state', assert => {
-  assert.plan(1)
+  assert.plan(2)
   const machine = mood({
     'before': ['condition', function (arg) {
       return arg
     }, (arg) => arg],
     'success': [function () {
-      assert.ok(arg)
+      assert.ok('success')
+      return Promise.reject('failure')
+    }, 'end', arg => arg],
+    'failure': [function () {
+      assert.ok('failure')
     }]
   })
   machine.trigger('condition', 'success')
