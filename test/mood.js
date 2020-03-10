@@ -224,6 +224,30 @@ test('no transition', assert => {
 })
 
 
+/**
+ * Multiple transitions/conditions.
+ */
+ 
+test('add multiple transitions', assert => {
+  assert.plan(2)
+  const machine = mood({
+    'before': [
+      ['condition1', 'after'],
+      ['condition3', function () {
+        assert.ok('executed')
+      }, 'resolved']
+    ],
+    'after': ['condition2', 'before']
+  })
+  machine.trigger('condition1')
+  machine.trigger('condition2')
+  machine.trigger('condition3').then(state => {
+    assert.equal(state, 'resolved')
+  })
+})
+
+
+
 
 // do this test after trigger (based on parameters passed)
 // test('dynamic state resolution', assert => {

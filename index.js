@@ -24,7 +24,9 @@ module.exports = (init, map) => {
   }
 
   machine.add = function (before, condition, transition, resolved, rejected) {
-    if (typeof condition === 'function') {
+    if (condition instanceof Array) {
+
+    } else if (typeof condition === 'function') {
       add(before, condition, transition, resolved)
     } else {
       if (typeof transition === 'string') {
@@ -63,7 +65,14 @@ module.exports = (init, map) => {
  */
 
 function initialize (machine, map = {}) {
-  if (typeof map === 'object') Object.keys(map).map(key => machine.add(key, ...map[key]))
+  if (typeof map === 'object') {
+    Object.keys(map).map(key => {
+      const arr = map[key]
+      if (arr[0] instanceof Array) {
+        arr.map(item => machine.add(key, ...item))
+      } else machine.add(key, ...arr)
+    })
+  }
 }
 
 /**
