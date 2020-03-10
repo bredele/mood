@@ -33,7 +33,10 @@ module.exports = (init, map) => {
     },
 
     trigger (condition, ...args) {
-      machine.emit(state + ' ' + condition, ...args)
+      return new Promise(resolve => {
+        machine.emit(state + ' ' + condition, ...args)
+        resolve(state)
+      })
     },
 
     /**
